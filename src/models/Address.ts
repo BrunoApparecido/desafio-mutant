@@ -1,6 +1,6 @@
 import Geo from './Geo'
 
-interface Address {
+interface IAddress {
     street : String,
     suite : String,
     city : String,
@@ -8,4 +8,4 @@ interface Address {
     geo : Geo
 }
 
-export default Address
+export default IAddress

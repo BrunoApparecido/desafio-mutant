@@ -1,8 +1,7 @@
 import axios from 'axios'
 import request from 'supertest'
 import express from 'express'
-import userController from './controllers/user.controller'
-import User from './models/User'
+import IUser from './models/User'
 import routes from './routes'
 
 const app = express();
@@ -41,7 +40,7 @@ const apiData =
 
 describe('User Endpoints', () => {
     it('Request endpoint (user/download), should be return code 200 and data', async () => {
-        const data : User[] = apiData
+        const data : IUser[] = apiData
         mockedAxios.get.mockResolvedValueOnce({data : data})
         const res = await request(app).get('/users/download')
         expect(res.status).toEqual(200)

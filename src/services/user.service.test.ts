@@ -43,4 +43,4 @@ describe('User Service', () => {
         mockedAxios.get.mockRejectedValueOnce(new Error("error"))
         await expect(userService.download()).rejects.toThrowError()
     })
-})  
+})

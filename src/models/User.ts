@@ -1,16 +1,16 @@
 
-import Address from './Address'
-import Company from './Company'
+import IAddress from './Address'
+import ICompany from './Company'
 
-interface User {
+interface IUser {
     id : Number,
     name: String,
     username: String,
     email : String,
-    address : Address,
+    address : IAddress,
     phone : String,
     website : String
-    company : Company
+    company : ICompany
 }
 
-export default User
+export default IUser

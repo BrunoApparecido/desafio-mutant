@@ -30,7 +30,8 @@ services:
      restart: always
      environment:
        ELASTIC_SEARCH_HOST: elasticsearch
-       DB_HOST : db:3306
+       DB_HOST : db
+       DB_PORT : 3306
        DB_USER : admin
        DB_PASSWORD : admin
        DB_DATABASE : mutant

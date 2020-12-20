@@ -2,3 +2,4 @@ dist
 /*.js
 /*.json
 /**/*.test.ts
+/src/migration

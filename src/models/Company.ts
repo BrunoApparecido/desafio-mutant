@@ -1,7 +1,7 @@
-interface Company {
+interface ICompany {
     name : String,
     catchPhrase : String,
     bs : String
 }
 
-export default Company
+export default ICompany

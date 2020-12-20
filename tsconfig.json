@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "es2017",
     "module": "commonjs",
     "outDir": "./dist",
@@ -8,7 +9,7 @@
     "strict": true,
     "esModuleInterop": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
+    "emitDecoratorMetadata": true,
     "isolatedModules": false
   },
   "include": ["src/**/*"],
