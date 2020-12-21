@@ -1,6 +1,7 @@
 import fs from 'fs'
 import elasticsearch from 'elasticsearch'
 import ILog from '../models/ILog'
+import express from 'express'
 
 export enum LogType {
   // eslint-disable-next-line no-unused-vars
@@ -19,18 +20,20 @@ class LogService {
     })
   }
 
-  private async writeElastic (type: LogType, message: ILog) {
+  private async writeElastic (type: LogType, logMessage: ILog) {
     try {
       this.elasticSearch.index({
         index: 'logs',
         body: {
-          ...message,
+          ...logMessage,
           logType: type === LogType.Info ? 'info' : 'error'
         }
       })
     }
     catch (e) {
-      this.writeConsole(LogType.Error, e)
+      logMessage.message = e
+      this.writeTextFile(LogType.Error, logMessage)
+      this.writeConsole(LogType.Error, logMessage)
     }
   }
 
@@ -46,7 +49,9 @@ class LogService {
       const dateFileName = currentDate.toLocaleDateString().replace(/\//gi, '-')
       fs.appendFileSync(`./logs/${dateFileName}.log`, message + '\r\n')
     } catch (e) {
-      this.writeConsole(LogType.Error, e)
+      logMessage.message = e
+      this.writeTextFile(LogType.Error, logMessage)
+      this.writeConsole(LogType.Error, logMessage)
     }
   }
 
@@ -54,6 +59,24 @@ class LogService {
     const message = this.stringLog(logMessage)
     if (type === LogType.Error) console.error('ERROR: ' + message)
     else console.log(message)
+  }
+
+  async writeError (req: express.Request, res: express.Response, message: string) {
+    const currentDate = new Date()
+    const date = currentDate.toISOString()
+    const logMessage: ILog = {
+      codeReturn: res.statusCode.toString(),
+      contentLength: '0',
+      datetime: date,
+      endpoint: req.url,
+      message: message,
+      method: req.method
+    }
+    this.writeLog(LogType.Error, logMessage)
+  }
+
+  async writeInfo (message: ILog) {
+    this.writeLog(LogType.Info, message)
   }
 
   async writeLog (type: LogType, message: ILog) {

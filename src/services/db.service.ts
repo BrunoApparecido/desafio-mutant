@@ -4,7 +4,7 @@ class DbService {
   private _connection?: Connection
 
   async getConnection (): Promise<Connection> {
-    if (!this._connection) this._connection = await createConnection(process.env.CONNECTION_TYPE || 'mysql')
+    if (!this._connection) this._connection = await createConnection()
     return this._connection
   }
 

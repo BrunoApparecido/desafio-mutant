@@ -16,7 +16,7 @@ app.use(morgan(function (tokens, req, res) {
     contentLength: tokens.res(req, res, 'content-length')
   }
 
-  logService.writeLog(LogType.Info, log)
+  logService.writeInfo(log)
 
   return null
 }))
