@@ -1,6 +1,7 @@
 import Express from 'express'
 import { IUserEntity } from '../entities/UserEntity'
-import IUser from '../models/User'
+import IUser from '../models/IUser'
+import logService, { LogType } from '../services/log.service'
 import userService from '../services/user.service'
 
 class UserController {
@@ -17,8 +18,8 @@ class UserController {
     try {
       const users = await userService.save()
       return res.json(users)
-    } catch (e) {
-      console.log(e)
+    } catch (e: Error | any) {
+      logService.writeLog(LogType.Error, e.message)
       return res.json([])
     }
   }

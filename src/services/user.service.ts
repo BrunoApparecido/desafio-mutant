@@ -1,4 +1,4 @@
-import IUser from '../models/User'
+import IUser from '../models/IUser'
 import DbService from './db.service'
 import axios from 'axios'
 import UserEntity, { IUserEntity } from '../entities/UserEntity'
@@ -17,6 +17,10 @@ class UserService {
 
       return 0
     })
+  }
+
+  private userFilter (user: IUser): Boolean {
+    return user.address.suite.includes('Apt')
   }
 
   private userToUserEntity (user: IUser): IUserEntity {
@@ -44,7 +48,6 @@ class UserService {
     const dbService = await DbService.getConnection()
     const userSaved = await dbService.getRepository(UserEntity).create(user)
     const userExist = await dbService.getRepository(UserEntity).find({ where: { apiId: Equal(user.apiId) } })
-    console.log(userExist)
     if (userExist.length === 0) await dbService.getRepository(UserEntity).save(userSaved)
 
     return user
@@ -52,7 +55,8 @@ class UserService {
 
   async save (): Promise<UserEntity[]> {
     const data = await this.download()
-    const users = data.map(this.userToUserEntity)
+    const userFilter = data.filter(this.userFilter)
+    const users = userFilter.map(this.userToUserEntity)
     const sortUser = this.sortUser(users)
     const entitySaved = await Promise.all(sortUser.map(this.saveUser))
 

@@ -1,6 +1,6 @@
 
-import IAddress from './Address'
-import ICompany from './Company'
+import IAddress from './IAddress'
+import ICompany from './ICompany'
 
 interface IUser {
     id : Number,

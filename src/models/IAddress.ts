@@ -1,4 +1,4 @@
-import Geo from './Geo'
+import Geo from './IGeo'
 
 interface IAddress {
     street : String,

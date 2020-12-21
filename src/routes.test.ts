@@ -1,7 +1,7 @@
 import axios from 'axios'
 import request from 'supertest'
 import express from 'express'
-import IUser from './models/User'
+import IUser from './models/IUser'
 import routes from './routes'
 
 const app = express();
@@ -54,4 +54,4 @@ describe('User Endpoints', () => {
     })
 
 
-})  
+})
