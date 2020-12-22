@@ -2,7 +2,7 @@ import express from 'express'
 import 'reflect-metadata'
 import routes from './routes'
 import morgan from 'morgan'
-import logService, { LogType } from './services/log.service'
+import logService from './services/log.service'
 import ILog from './models/ILog'
 
 const app = express()

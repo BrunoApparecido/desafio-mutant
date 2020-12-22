@@ -1,5 +1,5 @@
 import fs from 'fs'
-import elasticsearch from 'elasticsearch'
+import elasticsearch from '@elastic/elasticsearch'
 import ILog from '../models/ILog'
 import express from 'express'
 
@@ -16,17 +16,17 @@ class LogService {
   constructor () {
     const esHost = process.env.ELASTIC_SEARCH_HOST || 'http://localhost'
     this.elasticSearch = new elasticsearch.Client({
-      host: esHost + ':9200'
+      node: esHost + ':9200'
     })
   }
 
-  private async writeElastic (type: LogType, logMessage: ILog) {
+  private async writeElastic (logType: LogType, logMessage: ILog) {
     try {
       this.elasticSearch.index({
         index: 'logs',
         body: {
           ...logMessage,
-          logType: type === LogType.Info ? 'info' : 'error'
+          logType: logType === LogType.Info ? 'info' : 'error'
         }
       })
     }
